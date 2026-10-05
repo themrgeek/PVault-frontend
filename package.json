@@ -9,7 +9,7 @@
   "packageManager": "pnpm@11.25.0",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/check-deploy-env.mjs && vite build",
+    "build": "node scripts/check-vercel-env.mjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
