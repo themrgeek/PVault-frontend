@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+	font-family: 'Inter', sans-serif;
+	color: #dfe2ee;
+	background: #0f131c;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	--color-canvas: #0f131c;
+	--color-panel: #131922;
+	--color-panel-raised: #191f29;
+	--color-field: #0c1119;
+	--color-border: #303a47;
+	--color-border-strong: #465463;
+	--color-text: #dfe2ee;
+	--color-muted: #8a99a8;
+	--color-primary: #4edea3;
+	--color-primary-strong: #10b981;
+	--color-secondary: #4cd7f6;
+	--color-danger: #ff7b82;
+	--font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 320px;
+	min-height: 100vh;
+	margin: 0;
+}
+
+button,
+input {
+	font: inherit;
+}
+
+button,
+a,
+input {
+	-webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+::selection {
+	color: #002113;
+	background: var(--color-primary);
+}
