@@ -1,5 +1,4 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, '')
-
 const TOKEN_KEY = 'pvault.token'
 
 export async function apiRequest(path, options = {}) {
@@ -15,7 +14,8 @@ export async function apiRequest(path, options = {}) {
   }
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
-  const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers })
+  const requestUrl = `${API_BASE_URL}${path}`
+  const response = await fetch(requestUrl, { ...options, headers })
   if (response.status === 204) return null
 
   const contentType = response.headers.get('content-type') || ''
@@ -24,10 +24,10 @@ export async function apiRequest(path, options = {}) {
     : await response.text()
 
   if (!response.ok) {
-    const message = typeof payload === 'string'
+    const detail = typeof payload === 'string'
       ? payload
       : payload.message || payload.error || 'The request could not be completed.'
-    throw new Error(message)
+    throw new Error(`API request failed (${response.status} ${response.statusText})`)
   }
 
   return payload
@@ -104,15 +104,17 @@ export async function downloadApiFile(path, fallbackName) {
   const token = getAuthToken()
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
-  const response = await fetch(`${API_BASE_URL}${path}`, { headers })
+  const requestUrl = `${API_BASE_URL}${path}`
+  const response = await fetch(requestUrl, { headers })
   if (!response.ok) {
     const contentType = response.headers.get('content-type') || ''
     const payload = contentType.includes('application/json')
       ? await response.json()
       : await response.text()
-    throw new Error(typeof payload === 'string'
+    const detail = typeof payload === 'string'
       ? payload
-      : payload.message || payload.error || 'The download could not be completed.')
+      : payload.message || payload.error || 'The download could not be completed.'
+    throw new Error(`API request failed (${response.status} ${response.statusText}) at ${requestUrl}: ${detail}`)
   }
 
   const filename = response.headers.get('content-disposition')
